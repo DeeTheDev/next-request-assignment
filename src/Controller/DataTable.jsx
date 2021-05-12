@@ -2,13 +2,17 @@ import React from 'react';
 import '../App.css';
 import { Table, Container } from 'react-bootstrap';
 import TableList from './TableList.jsx';
-import CreateModal from './CreateModal.jsx';
 
 function DataTable(props) {
   let data = props.data || [];
+  const list = [];
+  data.forEach((element, index) => {
+    list.push(
+      <TableList key={index} element={element}/>
+    )
+  })
   return (
   <Container>
-      <CreateModal />
       <Table striped bordered hover variant="dark">
           <thead>
               <tr>
@@ -22,11 +26,7 @@ function DataTable(props) {
               </tr>
           </thead>
           <tbody>
-              {
-                data.map((element, index) => {
-                  return (<TableList key={index} element={element}/>)
-                })
-              }
+              { list }
           </tbody>
       </Table>
   </Container>
