@@ -22,7 +22,6 @@ class App extends React.Component {
       let API_ROUTE = 'https://603804c74e3a9b0017e92b01.mockapi.io​/requests';
       axios.get(API_ROUTE)
         .then(function (response) {
-          // console.log(response);
           response = response.data;
           this.setState({data:response});
           localStorage.setItem('data', JSON.stringify(response));
@@ -46,7 +45,6 @@ class App extends React.Component {
     }))
   }
   handleCreate(){
-    console.log("hit the handleCreate")
     let CREATE_ROUTE = 'https://603804c74e3a9b0017e92b01.mockapi.io​/requests/';
     axios.post(CREATE_ROUTE, this.state.input)
       .then((response) => {
@@ -66,7 +64,6 @@ class App extends React.Component {
   }
 
   render () {
-    console.log(this.state);
     return (
         <div className="App">
           <Container>
