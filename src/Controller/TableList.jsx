@@ -7,26 +7,25 @@ import React from "react";
 
 function TableList(props) {
   let data = props.element;
-  let info = {
-    id: data.id,
-    department_names: data.department_names,
-    expiration_date: data.expiration_date,
-    request_date: data.request_date,
-    request_due_date: data.request_due_date,
-    request_text: data.request_text,
-    requester: data.requester,
-  }
+  let { id,
+    department_names,
+    expiration_date,
+    request_date,
+    request_due_date,
+    request_text,
+    requester
+  } = data;
 
   return (
     <React.Fragment>
       <tr>
-        <td>{info.id}</td>
-        <td>{info.requester}</td>
-        <td>{info.department_names}</td>
-        <td>{info.request_text}</td>
-        <td>{info.request_date}</td>
-        <td>{info.request_due_date}</td>
-        <td>{info.expiration_date}</td>
+        <td>{id}</td>
+        <td>{requester}</td>
+        <td>{department_names}</td>
+        <td>{request_text}</td>
+        <td>{request_date}</td>
+        <td>{request_due_date}</td>
+        <td>{expiration_date}</td>
       </tr>
     </React.Fragment>
   );
