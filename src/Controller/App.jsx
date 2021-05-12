@@ -11,21 +11,14 @@ class App extends React.Component {
     super(props);
     this.createModal = React.createRef();
     this.state = {
-      data: JSON.parse(this.localData),
-      input: {
-        requester: "",
-        department_names: "",
-        expiration_date: "",
-        request_date: "",
-        request_due_date: "",
-        request_text: "",
-      }
+      data: [],
+      input: {}
     };
   }
   // Get localStorage array
   localData = localStorage.getItem('data')
   componentDidMount() {
-    if (!localStorage.getItem('data')) {
+    if (!this.localData) {
       let API_ROUTE = 'https://603804c74e3a9b0017e92b01.mockapi.io​/requests';
       axios.get(API_ROUTE)
         .then(function (response) {
@@ -37,15 +30,18 @@ class App extends React.Component {
         .catch(function (error) {
           console.log(error);
         })
+    }else {
+      this.setState({data:JSON.parse(this.localData)});
     }
   }
   // Updates for Create modal
   handleCreateChange(event) {
     let {name, value} = event.target;
     this.setState(prevState => ({
-      input: {                   // object that we want to update
-          ...prevState.input,    // keep all other key-value pairs
-          [name]: value      // update the value of specific key
+      input: {
+        ...prevState.input,
+        // update the value of specific key [name]
+        [name]: value
       }
     }))
   }
@@ -53,16 +49,21 @@ class App extends React.Component {
     console.log("hit the handleCreate")
     let CREATE_ROUTE = 'https://603804c74e3a9b0017e92b01.mockapi.io​/requests/';
     axios.post(CREATE_ROUTE, this.state.input)
-        .then((response) => {
-            this.SaveDataToLocalStorage(response.data)
-        })
+      .then((response) => {
+        this.saveDataLocalAndState(response.data)
+        this.setState({input: {}})
+      })
   }
-    // SaveDataToLocalStorage = (data) => {
-  //   var newData = [];
-  //   newData = JSON.parse(localStorage.getItem('data')) || [];
-  //   newData.push(data);
-  //   localStorage.setItem('data', JSON.stringify(newData));
-  // }
+  saveDataLocalAndState = (data) => {
+    let newData = data;
+    let newList = [];
+    newList = JSON.parse(this.localData) || [];
+    newList.push(newData);
+    // Update new object to local storage array
+    localStorage.setItem('data', JSON.stringify(newList));
+    // Update data state
+    this.setState({data:newList});
+  }
 
   render () {
     console.log(this.state);
